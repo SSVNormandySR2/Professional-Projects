@@ -1,7 +1,5 @@
 /*
  * Vincent Latona
- * Vyom Khare
- * Amroger Singh
  * March 24, 2022
  * This program is intended to solve the
  * producer-consumer problem with semaphores.
