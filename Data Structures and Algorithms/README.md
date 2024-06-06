@@ -6,5 +6,5 @@ This console application demonstrates linked list operations on club structures.
 This document analyzes time complexities and running times.
 
 # A3 - Recurrence Analysis
-This document analyzes recurrence relations of recursive algorithms and documents multithreading
+This document analyzes recurrence relations of recursive algorithms and documents multithreading \
 using the OpenMP API.
