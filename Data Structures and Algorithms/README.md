@@ -7,4 +7,4 @@ This document analyzes time complexities and running times.
 
 # A3 - Recurrence Analysis
 This document analyzes recurrence relations of recursive algorithms and documents multithreading
-using 
+using the OpenMP API.
