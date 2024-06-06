@@ -1,0 +1,93 @@
+---
+title: "Lab 1"
+author: "Vincent Latona"
+date: "2023-02-09"
+output: pdf_document
+---
+
+```{r, setup, include=FALSE}
+getwd()
+df = read.csv("Absenteeism_at_work.csv", sep=";", header=TRUE)
+library(dplyr)
+```
+
+# Height vs Weight
+
+```{r, scatter plot, include=TRUE, echo=TRUE}
+x = df$Weight #Assign weight to x-axis
+y = df$Height #Assign height to y-axis
+plot(x, y, col="navyblue", pch=19 , #Set data to plot, color, and point style
+     xlab="Weight of Absentee (kg)", ylab="Height of Absentee (cm)", #Set labels
+     main="Scatter Plot of Height vs Weight for Absentees") #Set title
+```
+
+-   The information displayed by the graph does not suggest any discernible patterns between height and weight of the data points. \newpage
+
+# Hours of Absences
+
+```{r, hours histogram, include=TRUE, echo=TRUE}
+hours = df$Absenteeism.time.in.hours #Store hours
+hist(hours, breaks=sqrt(length(hours)), col="red", #Set histogram information
+     xlim=c(0,125), ylim=c(0,500), #Set limits
+     xlab="Absence Hours", ylab="Number of Absences", #Set labels
+     main="Histogram of Absence Hours") #Set title
+```
+
+-   The information displayed by the histogram indicates that the majority of the absences are less than 20 hours per absence. Most absences fall between 1 and 10 hours. \newpage
+
+# Age vs Absences
+
+```{r, age histogram, include=TRUE, echo=TRUE}
+age = df$Age #Store age
+hist(age, breaks=sqrt(length(age)), col="darkorange", #Set histogram information
+     xlim=c(min(age)-1, max(age)+1), ylim=c(0,150), #Set limits
+     xlab="Age of Absentees", ylab="Number of Absences", #Set labels
+     main="Histogram of Age of Absentees") #Set title
+```
+
+-   The information displayed by the histogram indicates that there are more absences among younger workers (less than 40 years old). \newpage
+
+# Absence Hours by Month
+
+```{r, monthly hours, include=TRUE, echo=TRUE}
+hrspmTibble = group_by(df, Month.of.absence) %>% #Group by month
+  summarise(Absenteeism.time.in.hours = sum(Absenteeism.time.in.hours)) #Summarize hours by month
+hrs = hrspmTibble$Absenteeism.time.in.hours[-c(1)] #Create vector of hours by month
+barplot(hrs, col=topo.colors(length(hrs)), #Set bar plot information
+        main="Absence Hours per Month", ylim=c(0, 800), #Set title and limits
+        names.arg=c("Jan", "Feb", "Mar", "Apr", "May", "Jun", #Label bars
+                   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+        cex.names=0.75, xlab="Months", ylab="Total Hours") #Set labels
+```
+
+-   The information provided by the bar plot indicates high volume of absences in July and March. \newline
+-   Absences appear to be slightly higher towards the end of the year, possibly because of holidays. \newpage
+
+# Social Smokers
+
+```{r, social smokers, include=TRUE, echo=TRUE}
+status = recode_factor(df$Social.smoker, '0'="NSM",'1'="SM") #Encode smoker status
+boxplot(df$Absenteeism.time.in.hours ~ status, horizontal=T, #Set box plot information
+        ylab="Smoker Status", xlab="Absenteeism in Hours", #Set labels
+        main="Absenteeism vs Social Smoker Status", #Set title
+        col=c("green", "red")) #Set box colors
+legend("topright", legend=c("Non-Social Smoker", "Social Smoker"), #Create legend
+       fill=c("green", "red"))
+```
+
+-   The information provided by the box plots does not necessarily indicate that being a social smoker influences hours of absenteeism. There are more outliers in the non-social smokers category. \newpage
+
+# Social Drinkers
+
+```{r, social drinkers, include=TRUE, echo=TRUE}
+drinkStatus = recode_factor(df$Social.drinker, #Encode drinker status
+                            '0'="NSD", '1'="SD")
+boxplot(df$Absenteeism.time.in.hours ~ drinkStatus, horizontal=T, #Set bar plot information
+        ylab="Drinker Status", xlab="Absenteeism in Hours", #Set labels
+        main="Absenteeism vs Social Drinker Status", #Set titles
+        col=c("green", "red")) #Set box colors
+legend("topright", legend=c("Non-Social Drinker", "Social Drinker"), #Create legend
+       fill=c("green", "red"))
+```
+
+-   The information provided by the box plots are very similar in distribution and both have a high number of outliers. The information presented by the box plots does not necessarily indicate that social drinker status influences hours of absenteeism.
