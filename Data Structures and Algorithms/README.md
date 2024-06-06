@@ -15,5 +15,12 @@ This document analyzes tree algorithms.
 # A5 - Hash Tables
 This console application demonstrates how a hash table is created using a hashing algorithm.
 
-# A6 - Graphs
-This console application accepts a given graph from standard input and generates
+# A6 = Binary Trees
+This console application demonstrates various operations on a user-defined Binary Search Tree.
+
+# A7 - Graphs
+This console application reads a given graph from standard input, generates the same graph in memory, \
+then performs a depth-first-search on the graph and outputs the resulting DFS tree.
+
+# A8 - Floyd-Warshall
+This console application demonstrates the Floyd-Warshall algorithm for all pairs of a defined graph matrix.
