@@ -1,0 +1,149 @@
+---
+title: "Influential Factors on Hockey Team Success"
+author: "Vincent Latona"
+date: "2023-03-16"
+output: pdf_document
+---
+
+# Problem Introduction
+The National Hockey League was originally founded in 1917 as a professional ice-hockey association. Ice-hockey is by-far the most popular sport today in Canada and has only grown in popularity in the United States since the 1960's. In addition to increased popularity of the game, ice-hockey has also become a new frontier for data analytics. All kinds of statistics are collected in professional ice-hockey today, including: goals, assists, goals against average, save percentage, high-danger chances, expected goals against, goals saved above expected and many more. One of the most intriguing questions surrounding the sport today is: __What factors influence the success of a hockey team?__ A statistical solution to this exact problem is something that many NHL general managers would love to have; giving them a statistical blueprint for building a great hockey team.
+
+In the following report, _"success"_ will be defined in the context of a data set of ice-hockey team statistics. The data set will be analyzed for trends in the data and various factors will be used to create possible models of _"success."_ The data set to be used is "Teams.csv" from the Professional Hockey Database, courtesy of Open Source Sports. \newline
+
+## Necessary Libraries
+Libraries that will be used for analysis include: `dplyr,` `tidyverse,` and `data.table` for cleaning/managing the imported data set, and `ggplot2` for data visualization. \newline
+
+```{r, include=T, warning=F, message=F}
+library(dplyr) #Data Wrangling
+library(tidyverse)
+library(data.table)
+library(ggplot2) #Graphing
+```
+
+## Data Set Description
+The data set to be analyzed is a collection of ice-hockey team statistics which were collected between 1909 and 2011. The data set includes all relevant information of teams including: \newline 
+* Year the data was collected \newline
+* League the team is associated with \newline
+* Regular season division rank \newline
+* Number of games played \newline
+* Number of games won, lost and tied/lost in overtime \newline
+* Number of ranking points \newline
+* Number of goals for and against \newline
+* Final playoff position (if applicable)
+\newpage
+
+# Data Wrangling
+Before performing Exploratory Data Analysis, the data set that has been imported must first be standardized. Only necessary columns from the data set will be kept, including: Year, Name, Rank, Wins, Losses, Overtime losses, Points, Goals For, Goals Against, and Playoff results. Data analysis and modeling will be used on the standardized data set in order to draw possible conclusions for modern NHL team success. The number of games played during a current regular season is 82, thus only data points for 82-game seasons will be used for analysis. The current format of Rank within the original data set is the division rank, which must be changed to league ranking according to the team's regular season performance. Playoff results must also be standardized as another possible factor of success. \newline
+
+```{r, include=T, message=F, warning=F, comment=""}
+df = read.csv("Teams.csv") #Read the csv file for the project
+attach(df) #Attach the data frame for column referencing
+
+stand = filter(df, G == 82 & lgID == "NHL") %>% #Filter 82-game seasons
+  select(year, name, rank, W, L, OTL, Pts, GF, GA, playoff) #Select necessary fields
+
+min = min(stand$year) #Get least recent year
+max = max(stand$year) #Get most recent year
+
+setorder(stand, year, -Pts) #Order data according to year and points
+
+for (i in min:max) #Re-rank iterator
+{
+  stand$rank[stand$year == i] = #Re-rank according to standings
+    1:length(stand$year[stand$year == i])
+}
+
+stand$playoff = recode_factor(stand$playoff, "SC" = 1, #Re-code playoffs
+                              "F" = 2, "CF" = 3, "CSF" = 4, 
+                              "CQF" = 5, .default=6)
+
+print.data.frame(head(stand, 5)) #Display standardized data frame
+```
+
+It is important that the data was collected in a similar context, thus the data points that were kept were collected during seasons that consisted of 82 games. It is also important that the data points are descriptive of ice-hockey teams at the same level of competition, thus there was a need to keep data points regarding teams in the NHL. Both of these factors provide a foundation for contemporary ice-hockey, providing possible insights into how the statistics that are currently collected during the course of modern 82-game NHL season may inform team success. The purpose of re-ranking teams according to league standings is a way to better quantify success that would not be possible with relative ranking by divisions. Playoff data was re-coded to allow for quantified analysis where the lower the number associated with the team, the further the team progressed during the playoffs. The best a team can do in the playoffs is to win a Stanley Cup championship, `playoff` = 1, and the worst a team can do is to not make the playoffs at all, `playoff` = 6. 
+\newpage
+
+# Exploratory Data Analysis
+## Data Set Summary
+To gain some elementary insights for each column of data from the standardized data set, the summary of the data set is displayed below: \newline
+```{r, echo=T, message=F, warning=F, comment=""}
+summary(stand) #Display summary
+```
+According to the summary of the standardized data frame, the data was collected for teams between the 1995 and 2011 seasons. In a single season the maximum number of wins was 62 and the minimum was 14. The maximum number of losses was 59 and the minimum was 13. The average number of wins and losses in the standardized data set were 38.02 and 32.25 respectively. The average number of goals scored by teams was 229.3.  The average number of standings points in the standardized data set was 87.77. It could be useful to view some of these statistics plotted per season from 1995 and 2011 to view trends per year, which could inform possible models of team success.
+\newpage
+
+## Trends in Goals For
+The following plot displays the trend of the average number of goals scored by teams during a season: \newline
+```{r, echo=T, message=F, warning=F}
+goalsfor = group_by(stand, year) %>% #Generate summary of goals for
+  summarize(GF = mean(GF))
+ggplot(goalsfor, aes(x=goalsfor$year, y=goalsfor$GF)) + #Plot the summary
+  geom_line(color="blue") + 
+  geom_point() + labs(title="Avg Goals For per Season from 1995-2011", #Add labels
+                      y="Avg Goals For",
+                      x="Year")
+```
+The trend of the average number of goals for tends to decrease between 1995 and 2003, and once again between 2005 and 2011. These trends in the data could be explained by improved goal-tending by goalies, decreased goal-scoring prowess, or some combination of both.
+\newpage
+
+
+## Trends in Wins
+The following plot displays the trend of the average number of wins per season: \newline
+```{r, echo=T, message=F, warning=F}
+wins = group_by(stand, year) %>% #Generate summary of wins
+  summarize(W = mean(W))
+ggplot(wins, aes(x=wins$year, y=wins$W)) + #Plot the summary
+  geom_line(color="darkgreen") + 
+  geom_point() + labs(title="Avg Wins per Season from 1995-2011", #Add labels
+                      y="Avg Number of Wins",
+                      x="Year")
+```
+The trend of the average number of wins appears to cycle between increasing and decreasing until 2005. After 2005, teams earn about 41 wins per season on average. After 2000, the NHL had 30 teams, which may have adjusted after expansion drafts. Perhaps once teams adjusted to their placement in the league, they began to normalize and earn more wins per season.
+\newpage
+
+## Trends in Standings Points
+The following plot displays the trend of the average number of standings points earned per season: \newline
+```{r, echo=T, message=F, warning=F}
+pts = group_by(stand, year) %>% #Generate summary of points
+  summarize(p = mean(Pts))
+ggplot(pts, aes(x=pts$year, y=pts$p)) + #Plot the summary
+  geom_line(color="purple") + 
+  geom_point() + labs(title="Avg Standings Points per Season from 1995-2011", #Add labels
+                      y="Avg Number of Standings Points",
+                      x="Year")
+```
+The initial trend of standings points remained constant until about 1999. In 1999, the NHL started to track the number of Losses in Overtime. An overtime loss counts as 1 point towards the standings. When this began, the number of points began to steadily increase. 
+\newpage
+
+# Modeling
+## Quantifying Success
+There are a variety of ways to classify success in the context of ice-hockey. For the purpose of this report, success will be defined in the context of the regular season and will also be defined in the context of the playoffs. Success in the regular season will be measured by the number of standings points earned by teams, which directly influence league rank, during the season. Success in the playoffs will be measured by the final positioning in the playoffs, with 1 resulting in a Stanley Cup Championship, 2 resulting in a loss in the Stanley Cup Finals, 3 resulting in a loss in the Conference Championship, and so on. 6 results in not making the playoffs at all.
+
+## Regular Season - Standings Points from Goals For and Goals Against
+In the following model, multivariate linear regression modeling will be used to determine whether Goals For and Goals Against have an effect on Standings Points. A significance level of $\alpha=0.05$ will be used to evaluate the model(s).\newline
+```{r, echo=T, message=F, warning=F, comment=""}
+spModel = lm(Pts ~ GF + GA, stand) #Perform linear regression
+summary(spModel) #Display ANOVA
+```
+According to the Analysis of Variance table, the p-values associated with Goals For and Goals Against are significantly small. Both have p-values of less than 2e-16, which indicates that there is a significant connection between Goals For and Goals Against with Standings Points. The Adjusted Multiple R^2^ value is 0.862, which explains that about 86% of the variance in Standings Points is covered by Goals For and Goals Against. This provides a possible model for success in the regular season. The resulting model demonstrates that Goals For and Goals Against are highly influential on the number of Standings Points earned: $\text{Standings Points}=83.71+0.35\cdot\text{Goals For}-0.33\cdot\text{Goals Against}+\varepsilon$ with $\varepsilon$ error.
+\newpage
+
+## Playoffs - Playoff performance from League Rank, Goals For, and Goals Against
+In the following model, multivariate linear regression will be used to determine the independent variables (League Rank, Goals For, Goals Against) that affect performance of ice-hockey teams during the playoffs. A significance level of $\alpha=0.05$ will be used to evaluate the model(s). \newline
+```{r, echo=T, message=F, warning=F, comment=""}
+pModel = lm(as.numeric(playoff) ~ rank + GF + GA, stand) #Perform linear regression
+summary(pModel) #Display ANOVA
+
+rpModel1 = lm(as.numeric(playoff) ~ rank + GF, stand) #Perform linear regression
+summary(rpModel1) #Display ANOVA
+
+rpModel2 = lm(as.numeric(playoff) ~ rank, stand) #Perform linear regression
+summary(rpModel2) #Display ANOVA
+```
+According to the first Analysis of Variance table, League Rank was the most significant independent variable with a p-value of 3.57e-15. The next step was to remove the least significant independent variable, Goals Against, which had a p-value of 0.392. Another round of linear regression was performed without Goals Against, resulting in a p-value of 0.43 and less than 2e-16 for Goals For and League Rank respectively. This model reaffirmed the significance of League Rank and resulted in the removal of Goals For from the model. The final round of linear regression resulted in a p-value of less than 2e-16 for League Rank. The final value of the Adjusted R^2^ value was 0.514, which explains that only 51% of the variance in Playoff performance is determined by League Rank. The resulting model demonstrates that League Rank is highly influential on final playoff placement: $\text{Playoff Result}=3.25+0.11\cdot\text{League Rank}+\varepsilon$ with $\varepsilon$ error.
+
+# Conclusions
+After performing multivariate linear regression to determine influential factors on success in the regular season and playoffs, it was determined that both Goals For and Goals Against are highly influential on the number of Standings Points received during the regular season and that League Rank was highly influential on Playoff performance. Regular season success can be explained in terms of goals scored for your team and good goal-tending will result in more wins during the course of a season. Playoff performance could possibly be explained by the format of the playoffs where rank within a given division will result in more favorable match-ups in the post-season, as well as possible advantage for playing in the team's home arena for more games in each series. However, the model generated for playoff success was not a very adequate model and in order to derive a better model in the future, it would be necessary to analyze statistics collected during the playoffs. In general, this information could be useful for NHL general managers to determine how to build teams for better performance during the regular season, which could influence positioning for performance in the playoffs.
+
+# Citations
+“Professional Hockey Database.” www.kaggle.com, 2020, www.kaggle.com/datasets/open-source-sports/professional-hockey-database?select=Teams.csv.
