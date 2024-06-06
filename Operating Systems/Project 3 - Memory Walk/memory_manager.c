@@ -1,7 +1,5 @@
 /*
  * Vincent Latona
- * Vyom Khare
- * Amroger Singh
  * April 21, 2022
  * This module performs Memory Management analysis.
  */
