@@ -23,3 +23,11 @@ This project demonstrates recursive algorithms using MIPS.
 ## A8 - Binary Operations
 This project demonstrates higher-order functions in binary, as well as \
 floating-point numbers in binary.
+
+## A9 - Statistics and Instruction Analysis
+This project demonstrates efficiency statistics for given problems, as well as analysis of instructions that \
+affect execution of the processor. This leads to the development of the pipelined processor.
+
+## A10 - Dependencies and Caching
+This project demonstrates register dependencies in the non-pipelined processor and demonstrates hashing \
+related to caching.
