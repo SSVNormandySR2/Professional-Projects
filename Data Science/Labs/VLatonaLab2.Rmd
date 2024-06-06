@@ -1,0 +1,167 @@
+---
+title: "Lab 2"
+author: "Vincent Latona"
+date: "2023-02-24"
+output: pdf_document
+---
+
+```{r setup, include=F}
+#Include libraries
+library(ggplot2movies)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+
+data(movies) #Load and attach data
+attach(movies)
+df = movies
+```
+
+# 1. Years of Production
+```{r years, include=T}
+youngest = max(df$year) #Youngest - Used inline
+oldest = min(df$year) #Oldest - Used inline
+range = youngest-oldest #Range - Used inline
+```
+The oldest movie was produced in `r oldest` and the youngest movie was produced in `r youngest`. \newline
+The range of movies is `r range` years.
+
+# 2. Movie Budgets
+```{r budgets, include=T, comment=""}
+total = nrow(df) #Get total number of rows
+noBudget = sum(is.na(df$budget)) #Count movies without budget
+noBudgetProp = round(noBudget/total, 2) #Calculate proportion - Used inline
+budgetProp = round(1-noBudgetProp, 2) #Calculate opposite proportion - Used inline
+top = df %>% select(title, budget) #Select needed columns
+top = top[order(-top$budget),] %>% head(5) #Order by budget and keep top 5
+print.data.frame(top) #Format data frame display
+```
+The 5 most expensive movies in the data frame are listed above. \newline
+The proportion of movies that have their budgets included in the data frame is `r budgetProp` and the proportion of movies that do not have their budgets included in the data frame is `r noBudgetProp`. 
+\newpage
+
+# 3. Longest Movies
+```{r longest, include=T, comment=""}
+long = df %>% select(title, length) #Select needed columns
+long = long[order(-long$length),] %>% head(5) #Order by length and keep top 5
+print.data.frame(long) #Format data frame display
+```
+The 5 longest movies in the data frame are listed above.\newline
+
+# 4. Short Movies
+```{r short, include=T}
+shortMovies = df %>% filter(Short == 1) %>%  #Filter by short
+  select(title, length) #Project title and length
+shortest = shortMovies[order(shortMovies$length),] %>% head(1) #Get shortest - Used inline
+longest = shortMovies[order(shortMovies$length),] %>% tail(1) #Get longest - Used inline
+```
+The shortest short movie is "`r shortest$title[1]`" with a run time of `r shortest$length[1]` minute(s). \newline
+The longest short movie is "`r longest$title[1]`" with a run time of `r longest$length[1]` minute(s). 
+\newpage
+
+# 5. Movies per Genre
+```{r genres, include=T}
+genres = data.frame(Count = c(sum(df$Action), sum(df$Animation), #Define count per genre
+                              sum(df$Comedy), sum(df$Drama), 
+                              sum(df$Documentary), sum(df$Romance), 
+                              sum(df$Short)),
+                    Genre = c("Action", "Animation", #Define genres
+                              "Comedy", "Drama", "Documentary",
+                              "Romance", "Short"))
+ggplot(genres, aes(x=Genre, y=Count, fill=Genre)) + #Generate ggplot
+  labs(title="Movies per Genre", x="Genre", y="Number of Movies") + #Add labels
+  geom_bar(stat="identity") + #Use bar plot
+  geom_text(aes(label=Count), vjust=-0.5) #Add values
+```
+\newpage
+
+# 6. Average Rating per Genre
+```{r ratings, include=T}
+genreRatings = list(df$rating[df$Action == 1], df$rating[df$Animation == 1], #Calculate ratings
+              df$rating[df$Comedy == 1], df$rating[df$Drama == 1],           #per genre
+              df$rating[df$Documentary == 1], df$rating[df$Romance == 1],
+              df$rating[df$Short == 1])
+meanRatings = round(sapply(genreRatings, mean), 4) #Calculate avg ratings
+ratingsByGenre = data.frame(Average = meanRatings, #Create data frame
+                            Genre = c("Action", "Animation", #Define genres
+                              "Comedy", "Drama", "Documentary",
+                              "Romance", "Short"))
+ggplot(ratingsByGenre, aes(x=Genre, y=Average, fill=Genre)) + #Generate ggplot
+  labs(title="Average Rating per Genre", #Add labels
+       x="Genre", y="Average Rating of Movies") + 
+  geom_bar(stat="identity") + #Use bar plot
+  geom_text(aes(label=Average), vjust=-0.5) #Add values
+```
+\newpage
+
+# 7. Average Rating of Movies from 2000-2005
+```{r select rating, include=T}
+range = df %>% filter(year %in% 2000:2005) #Select movies from 2000-2005
+genreRatings = list(range$rating[range$Action == 1], #Calculate ratings
+                    range$rating[range$Animation == 1], #per genre
+                    range$rating[range$Comedy == 1], range$rating[range$Drama == 1],
+                    range$rating[range$Documentary == 1], range$rating[range$Romance == 1],
+                    range$rating[range$Short == 1])
+meanRatings = round(sapply(genreRatings, mean), 4) #Calculate avg ratings
+ratingsByGenre = data.frame(Average = meanRatings, #Create data frame
+                            Genre = c("Action", "Animation", #Define genres
+                              "Comedy", "Drama", "Documentary",
+                              "Romance", "Short"))
+ggplot(ratingsByGenre, aes(x=Genre, y=Average, fill=Genre)) + #Generate ggplot
+  labs(title="Average Rating per Genre from 2000-2005", #Add labels
+       x="Genre", y="Average Rating of Movies") + 
+  geom_bar(stat="identity") + #Use bar plot
+  geom_text(aes(label=Average), vjust=-0.5) #Add values
+```
+\newpage
+
+# 8. Movies by Genre from 1990-2005
+```{r name, include=T}
+range = 1990:max(df$year) #Specify range of years to select
+movieRange = df %>% filter(year %in% range) #Select movies in the range
+action = as.vector(tapply(movieRange$Action, movieRange$year, sum)) #Calculate count per
+animation = as.vector(tapply(movieRange$Animation, movieRange$year, sum)) #year by genre
+comedy = as.vector(tapply(movieRange$Comedy, movieRange$year, sum))
+drama = as.vector(tapply(movieRange$Drama, movieRange$year, sum))
+documentary = as.vector(tapply(movieRange$Documentary, movieRange$year, sum))
+romance = as.vector(tapply(movieRange$Romance, movieRange$year, sum))
+genreByYear = data.frame(Year=range, #Generate data frame
+                         Action=action, Animation=animation,
+                         Comedy=comedy, Drama=drama, 
+                         Documentary=documentary, 
+                         Romance=romance)
+g = gather(genreByYear, key="Genre", value="Count", 2:7) #Gather data by genre
+ggplot(g, aes(x=Year, y=Count, color=Genre)) + #Generate ggplot
+  geom_line() + #Add lines per genre
+  labs(title="Movies by Genre from 1990-2005", #Add labels
+       y="Movie Count")
+```
+\newpage
+
+# 9. Questions relating to Comedy
+```{r old men, include=T}
+gom = df$rating[df$title == "Grumpy Old Men"] #Used inline
+gom2 = df$rating[df$title == "Grumpier Old Men"] #Used inline
+best = df %>% 
+  filter(Comedy == 1) %>%
+  select(rating, title)
+best = best[order(-best$rating),]
+comedies = df %>% #Filter by comedies in 1993
+  filter(Comedy == 1 & year == 1993)
+com = c(round(mean(comedies$rating),1), #Define ratings comparison
+        comedies$rating[comedies$title == "Grumpy Old Men"])
+compare = data.frame(Ratings=com, #Put ratings in data frame
+                     Movies=c("Other Comedies",
+                              "Grumpy Old Men"))
+ggplot(compare, aes(x=Movies, y=Ratings, fill=Movies)) + #Generate ggplot
+  geom_bar(stat="identity") + #Use bar plot
+  labs(title="Grumpy Old Men vs Average Comedy in 1993") + #Add title
+  geom_text(aes(label=Ratings), vjust=-0.5) #Add values
+```
+1. How different is the user rating for "Grumpy Old Men" compared against the average of user ratings for all comedies in 1993? (answer above) \newline
+2. Which film was rated more favorably, "Grumpy Old Men" or "Grumpier Old Men"? \newline
+(Grumpy Old Men: `r gom` > Grumpier Old Men: `r gom2`) \newline
+3. What movie is the best rated comedy in the database? \newline
+(The best rated comedy in the database is "`r best$title[1]`")
