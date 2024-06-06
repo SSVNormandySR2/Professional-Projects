@@ -1,5 +1,4 @@
 ﻿/*
- * Vyom Khare
  * Vincent Latona
  */
 
