@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:IdealWeightCalculator.ViewModels"
+             x:DataType="local:APIViewModel"
+             x:Class="IdealWeightCalculator.Views.API"
+             Title="Ideal Weight Calculator API">
+    <VerticalStackLayout>
+        <HorizontalStackLayout
+            Margin="5"
+            Spacing="5">
+            <Label
+                Text="Please enter your height as an integer (inches): "
+                FontSize="Small"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+            <Entry
+                Placeholder="60"
+                Keyboard="Numeric"
+                ClearButtonVisibility="WhileEditing"
+                Text="{Binding inputHeight}"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout
+            Margin="5"
+            Spacing="5">
+            <Label
+                Text="Please enter your gender (M/F): "
+                FontSize="Small"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+            <Entry
+                Placeholder="M"
+                Keyboard="Default"
+                MaxLength="1"
+                ClearButtonVisibility="WhileEditing"
+                Text="{Binding inputGender}"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout
+            Margin="5"
+            Spacing="5">
+            <Label
+                Text="Please enter your weight as an integer (pounds): "
+                FontSize="Small"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+            <Entry
+                Placeholder="120"
+                Keyboard="Numeric"
+                ClearButtonVisibility="WhileEditing"
+                Text="{Binding inputWeight}"/>
+        </HorizontalStackLayout>
+        <Label
+            Text="{Binding outputError}"
+            TextColor="Red"
+            FontSize="Small"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"/>
+        <Button
+            Text="Calculate Ideal Weight with API"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Command="{Binding calcIdealWeightAPICommand}"/>
+        <HorizontalStackLayout
+            Margin="5"
+            Spacing="5">
+            <Label
+                Text="Your ideal weight is: "
+                FontSize="Small"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+            <Label
+                x:Name="wOutput"
+                Text="{Binding idealWeight}"
+                FontSize="Small"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+        </HorizontalStackLayout>
+        <Label
+            Text="{Binding riskFactor}"
+            FontSize="Small"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"/>
+        <Button
+            Text="Educate Me"
+            FontSize="Small"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"
+            Command="{Binding linkNavigationCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>
