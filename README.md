@@ -6,15 +6,14 @@
 * Projects and labs intended to demonstrate elementary understanding of fundamental programming language constructs in Java
 
 ### Semester 2
-#### Object-Oriented Programming and Data Structures
+#### Object-Oriented Programming
 * Projects intended to demonstrate knowledge of elementary data structures (linked lists, stacks, queues, heaps) in Java
 * Additional projects intended to demonstrate knowledge of elementary UI application development using JavaFX
 
 ### Semester 3
-#### Digital Design Fundamentals
+#### Digital Design
 * Projects intended to demonstrate elementary knowledge of logic gates, multiplexers, decoders, registers, and Mealy and Moore machines
 * Each project built up to the development of a simple CPU
-
 
 ### Semester 4
 #### Introduction to Programming Languages
@@ -39,13 +38,6 @@
 * Large project intended to demonstrate understanding of Software Engineering development process (Agile Scrum) using JavaFX
 * Coverage of various Software Engineering development styles (Agile vs Waterfall)
 
-#### Information Assurance
-* Projects intended to demonstrate understanding of information assurance using cryptography and hashing using Python
-
-#### Applied Linear Algebra
-* Projects intended to demonstrate understanding of linear algebra in Matlab
-* Labs intended to demonstrate algorithmic implmentations of linear algebraic concepts
-
 ### Semester 6
 #### Operating Systems
 * Projects intended to demonstrate understanding of basic kernels, memory management, process scheduling, and concurrency control using C
@@ -59,21 +51,11 @@
 * 1 project dedicated to parsing an operator grammar using an operator precedence table
 * 1 project dedicated to parsing a pseudo-programming language and output an executable linked-list of instructions
 
-#### Introduction to Theoretical Computer Science
-* Assignments intended to demonstrate understanding of classical computing and evolution to Turing Machines
-* Formal proof-writing using automatons (DFA, NFA, PDA, TM)
-* Coverage of problems that cannot be solved using algorithms
-
 ### Semester 7
 #### Distributed Software Development
 * Projects intended to demonstrate knowledge of distributed and service-oriented programming paradigm concepts (WSDL, REST) using C#
 * Coverage of concurrency control in C#
 * Development of distributed software systems in ASP using WSDL/REST calls to online services
-
-#### Introduction to Human-Computer Interaction
-* Assignments inteded to demonstrate knowledge of HCI concepts related to usability
-* Coverage of heuristic evaluations and cognitive walkthrough of software systems
-* 1 project related to the execution of a system usability study with a group of users on an original software system against an improved prototype software system
 
 #### Software Quality Assurance and Testing
 * Assignments inteded to demonstrate knowledge of software quality and testing practices using Java
@@ -90,6 +72,6 @@
 * Assignments intended to demonstrate understanding of elementary design decision of software systems
 * Coverage of design patterns, software architecture, coupling, and cohesion
 
-#### Exploring Data in R and Python
+#### Data Science - Exploring Data in R and Python
 * Projects intended to demonstrate elementary knowledge of data science concepts using Python and R
 * Coverage of basic statistical concepts in both R and Python
