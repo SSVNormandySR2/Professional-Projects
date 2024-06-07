@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Cruises>
+	<Cruise FoundedIn="1972">
+		<ParentCompany>Carninval Corporation</ParentCompany>
+		<Name>Carnival Cruise Line</Name>
+		<Reservation>
+			<Phone>1-800-CARNIVAL</Phone>
+			<Url>www.carnival.com</Url>
+		</Reservation>
+		<Headquarter Zip="33178">
+			<City>Miami</City>
+			<State>Florida</State>
+		</Headquarter>
+		<DeparturePorts>Los Angeles</DeparturePorts>
+		<DeparturePorts>Baltimore</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="1988">
+		<ParentCompany>Royal Caribbean Group</ParentCompany>
+		<Name>Celebrity Cruise Line</Name>
+		<Reservation>
+			<Phone>1-888-751-7804</Phone>
+			<Url>www.celebritycruises.com</Url>
+		</Reservation>
+		<Headquarter Zip="33178">
+			<City>Miami</City>
+			<State>Florida</State>
+		</Headquarter>
+		<DeparturePorts>Los Angeles</DeparturePorts>
+		<DeparturePorts>Boston</DeparturePorts>
+		<DeparturePorts>Miami</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="1840">
+		<ParentCompany>Carnival Corporation</ParentCompany>
+		<Name>Cunard Line</Name>
+		<Reservation>
+			<Phone>800-728-6273</Phone>
+			<Url>www.cunard.com</Url>
+		</Reservation>
+		<Headquarter Zip="91321">
+			<City>Santa Clarita</City>
+			<State>California</State>
+		</Headquarter>
+		<DeparturePorts>New York</DeparturePorts>
+		<DeparturePorts>San Francisco</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="1995">
+		<ParentCompany>Disney Parks, Experiences, and Products</ParentCompany>
+		<Name>Disney Cruise Line</Name>
+		<Reservation>
+			<Phone>800-951-3532</Phone>
+			<Url>disneycruise.disney.go.com</Url>
+		</Reservation>
+		<Headquarter Zip="34747">
+			<City>Celebration</City>
+			<State>Florida</State>
+		</Headquarter>
+		<DeparturePorts>New York</DeparturePorts>
+		<DeparturePorts>San Diego</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="1873">
+		<ParentCompany>Carnival Corporation</ParentCompany>
+		<Name>Holland America Line</Name>
+		<Reservation>
+			<Phone>1-855-932-1711</Phone>
+			<Url>www.hollandamerica.com</Url>
+		</Reservation>
+		<Headquarter Zip="98101">
+			<City>Seattle</City>
+			<State>Washington</State>
+		</Headquarter>
+		<DeparturePorts>Boston</DeparturePorts>
+		<DeparturePorts>Seattle</DeparturePorts>
+		<DeparturePorts>San Diego</DeparturePorts>
+		<DeparturePorts>Anchorage</DeparturePorts>
+	</Cruise>
+	<Cruise>
+		<ParentCompany>Norwegian Cruise Line Holdings</ParentCompany>
+		<Name>Norwegian Cruise Line</Name>
+		<Reservation>
+			<Phone>800-657-5773</Phone>
+			<Url>www.ncl.com</Url>
+		</Reservation>
+		<Headquarter Zip="33178">
+			<City>Miami</City>
+			<State>Florida</State>
+		</Headquarter>
+		<DeparturePorts>Baltimore</DeparturePorts>
+		<DeparturePorts>New York</DeparturePorts>
+		<DeparturePorts>Honolulu</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="1965">
+		<ParentCompany>Carnival Corporation</ParentCompany>
+		<Name>Princess Cruises</Name>
+		<Reservation>
+			<Phone>1-800-774-6237</Phone>
+			<Url>www.princess.com</Url>
+		</Reservation>
+		<Headquarter Zip="91321">
+			<City>Santa Clarita</City>
+			<State>California</State>
+		</Headquarter>
+		<DeparturePorts>Los Angeles</DeparturePorts>
+		<DeparturePorts>New York</DeparturePorts>
+		<DeparturePorts>San Diego</DeparturePorts>
+		<DeparturePorts>San Francisco</DeparturePorts>
+		<DeparturePorts>Galveston</DeparturePorts>
+	</Cruise>
+	<Cruise>
+		<ParentCompany>Genting Hong Kong</ParentCompany>
+		<Name>Crystal Cruises</Name>
+		<Reservation>
+			<Phone>310-785-9300</Phone>
+			<Url>www.crystalcruises.com</Url>
+		</Reservation>
+		<Headquarter Zip="60515">
+			<City>Downers Grove</City>
+			<State>Illinois</State>
+		</Headquarter>
+		<DeparturePorts>Los Angeles</DeparturePorts>
+		<DeparturePorts>New York</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="2007">
+		<ParentCompany>Sycamore Partners</ParentCompany>
+		<Name>Azamara Cruises</Name>
+		<Reservation>
+			<Phone>1-833-292-2292</Phone>
+			<Url>www.azamara</Url>
+		</Reservation>
+		<Headquarter Zip="33178">
+			<City>Miami</City>
+			<State>Florida</State>
+		</Headquarter>
+		<DeparturePorts>Miami</DeparturePorts>
+		<DeparturePorts>Fort Lauderdale</DeparturePorts>
+	</Cruise>
+	<Cruise FoundedIn="1984">
+		<ParentCompany>Xanterra Travel Collection</ParentCompany>
+		<Name>Windstar Cruises</Name>
+		<Reservation>
+			<Phone>888-274-0365</Phone>
+			<Url>www.windstarcruises.com</Url>
+		</Reservation>
+		<Headquarter Zip="98101">
+			<City>Seattle</City>
+			<State>Washington</State>
+		</Headquarter>
+		<DeparturePorts>Miami</DeparturePorts>
+		<DeparturePorts>Fairbanks</DeparturePorts>
+	</Cruise>
+</Cruises>
+<!--Vincent Latona-->

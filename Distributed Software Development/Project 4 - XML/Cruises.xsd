@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<xsd:element name="Cruises" type="CruisesType"/>
+	<xsd:complexType name="CruisesType">
+		<xsd:sequence>
+			<xsd:element name="Cruise" type="CruiseDetails" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CruiseDetails">
+		<xsd:sequence>
+			<xsd:element name="ParentCompany" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Reservation" type="ReservationDetails" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Headquarter" type="HeadquarterDetails" minOccurs="1" maxOccurs="unbounded"/>
+			<xsd:element name="DeparturePorts" type="xsd:string" minOccurs="2" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="FoundedIn" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="ReservationDetails">
+		<xsd:sequence>
+			<xsd:element name="Phone" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Url" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HeadquarterDetails">
+		<xsd:sequence>
+			<xsd:element name="City" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="State" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+		<xsd:attribute name="Zip" type="xsd:string" use="required"/>
+	</xsd:complexType>
+</xsd:schema>
+<!--Vincent Latona-->
